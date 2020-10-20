@@ -20,8 +20,9 @@ app.get('/api/greeting', (req, res) => {
   const name = req.query.name || 'World';
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
-  this.socket.emit('data', 'CHUNK1');
-  this.socket.emit('data', 'CHUNK2')
+  this.socket.emit('data', { data: 'chunk-1', isFinal: false });
+  this.socket.emit('data', { data: 'chunk-2', isFinal: false });
+  this.socket.emit('data', { data: 'chunk-3', isFinal: true });
 });
 
 app.listen(3001, () =>

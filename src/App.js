@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import * as rxjs from 'rxjs';
+import * as operators from 'rxjs/operators';
 import socketIOClient from 'socket.io-client';
 
 
@@ -14,10 +15,6 @@ import socketIOClient from 'socket.io-client';
  *  A few examples of streams of values over time: 
 */
 const socket = socketIOClient('http://localhost:4001', { transports: ['websocket'] });
-socket.on('data', (data) => {
-  console.log("on DATA");
-  console.log(data);
-});
 
 class App extends React.Component {
   constructor(props) {
@@ -82,6 +79,28 @@ class App extends React.Component {
     fetch(`/api/greeting?name=${'World'}`)
       .then(response => response.json())
       .then(state => this.setState(state));
+
+    // socket.on('data', (data) => {
+    //   console.log("on DATA");
+    //   console.log(data);
+    // });
+
+    // const socket$ = new rxjs.Observable((observer) => {
+    //   socket.on('data', (payload) => {
+    //     const data = payload.data;
+    //     const isFinal = payload.isFinal;
+        
+    //     observer.next(data);
+
+    //     if(isFinal) {
+    //       observer.complete();
+    //     }
+    //   });
+    // });
+
+    // socket$
+    //   .pipe(operators.finalize(() => console.log(' finished stream ')))
+    //   .subscribe(data => console.log(data));
   }
 
   render() {

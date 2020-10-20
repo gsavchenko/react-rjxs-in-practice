@@ -2,6 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import * as rxjs from 'rxjs';
+import socketIOClient from 'socket.io-client';
+
 
 /*  Introduction - What are streams of values?
  *  In JavaScript applications almost everything is asynchronous:
@@ -11,6 +13,11 @@ import * as rxjs from 'rxjs';
  * 
  *  A few examples of streams of values over time: 
 */
+const socket = socketIOClient('http://localhost:4001', { transports: ['websocket'] });
+socket.on('data', (data) => {
+  console.log("on DATA");
+  console.log(data);
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -51,7 +58,7 @@ class App extends React.Component {
 
     //   setTimeout(() => {
     //     console.log('completed...');
-        
+
     //     let counter = 0;
     //     setInterval(() => {
     //       console.log(counter);
@@ -61,7 +68,7 @@ class App extends React.Component {
     // });
 
     // #2 Observables make is easy to combine streams
-    
+
     // https://rxjs-dev.firebaseapp.com/api/index/function/timer
     // const interval$ = rxjs.timer(3000, 1000);
     // interval$.subscribe(val => console.log('stream 1 ' + val));
@@ -76,7 +83,7 @@ class App extends React.Component {
       .then(response => response.json())
       .then(state => this.setState(state));
   }
-  
+
   render() {
     return (
       <div className="App">
